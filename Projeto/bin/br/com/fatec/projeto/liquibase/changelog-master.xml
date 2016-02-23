@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	dbchangelog-3.4.xsd
+	http://www.liquibase.org/xml/ns/dbchangelog-ext
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet id="010" author="laleska.piaunios">
+		<createTable tableName="PROJ_USER">	
+			<column name="ID" type="java.sql.Types.BIGINT" />
+			<column name="LOGIN" type="java.sql.Types.VARCHAR(30)" />
+			<column name="NAME" type="java.sql.Types.VARCHAR(30)" />
+			<column name="PASSWORD" type="java.sql.Types.VARCHAR(30)" />
+		</createTable>
+		<addPrimaryKey columnNames="ID" tableName="PROJ_USER"/>
+	</changeSet>
+	
+	<changeSet id="020" author="laleska.piaunios">
+		<createTable tableName="PROJ_PAPER">	
+			<column name="ID" type="java.sql.Types.BIGINT" />
+			<column name="DESCRIPTION" type="java.sql.Types.VARCHAR(30)" />
+			<column name="NAME" type="java.sql.Types.VARCHAR(30)" />
+			<column name="GROUPID" type="java.sql.Types.VARCHAR(30)" />
+		</createTable>
+		<addPrimaryKey columnNames="ID" tableName="PROJ_PAPER"/>
+	</changeSet>
+	
+	<changeSet id="030" author="laleska.piaunios">
+		<createTable tableName="PROJ_GROUP_PAPER">	
+			<column name="ID" type="java.sql.Types.BIGINT" />
+			<column name="DESCRIPTION" type="java.sql.Types.VARCHAR(30)" />
+			<column name="NAME" type="java.sql.Types.VARCHAR(30)" />
+		</createTable>
+		<addPrimaryKey columnNames="ID" tableName="PROJ_GROUP_PAPER"/>
+	</changeSet>
+	
+	<changeSet id="040" author="laleska.piaunios">
+		<addForeignKeyConstraint constraintName="FK_GROUP_PAPER"
+		 referencedTableName="PROJ_GROUP_PAPER" 
+		 baseColumnNames="PROJ_GROUPID"
+		 baseTableName="PROJ_PAPER"
+		 referencedColumnNames="PROJ_ID"/>
+	</changeSet>
+	
+	
+	<changeSet id="050" author="laleska.piaunios">
+		<createTable tableName="PAPER_USER">	
+			<column name="ID_PS" type="java.sql.Types.BIGINT" />
+			<column name="ID_USER" type="java.sql.Types.BIGINT" />
+			<column name="ID_PAPER" type="java.sql.Types.BIGINT" />
+		</createTable>
+		<addPrimaryKey columnNames="ID_PS" tableName="PAPER_USER"/>
+	</changeSet>
+	
+	
+	<changeSet id="060" author="laleska.piaunios">
+		<createTable tableName="GROUP_USER">	
+			<column name="ID_GS" type="java.sql.Types.BIGINT" />
+			<column name="ID_USER" type="java.sql.Types.BIGINT" />
+			<column name="ID_GROUP" type="java.sql.Types.BIGINT" />
+		</createTable>
+		<addPrimaryKey columnNames="ID_GS" tableName="GROUP_USER"/>
+	</changeSet>
+	
+	
+	<changeSet id="070" author="laleska.piaunios">
+		<addForeignKeyConstraint constraintName="FK_PAPER_USER"
+		 referencedTableName="PAPER_USER" 
+		 baseColumnNames="PROJ_GROUPID"
+		 baseTableName="PROJ_PAPER"
+		 referencedColumnNames="PROJ_ID"/>
+	</changeSet>
+	
+	<changeSet id="080" author="laleska.piaunios">
+		<addForeignKeyConstraint constraintName="FK_USER_GROUP"
+		 referencedTableName="PROJ_GROUP_PAPER" 
+		 baseColumnNames="PROJ_GROUPID"
+		 baseTableName="PROJ_PAPER"
+		 referencedColumnNames="PROJ_ID"/>
+	</changeSet>
+	
+</databaseChangeLog>
